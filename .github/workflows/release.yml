@@ -38,7 +38,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git add .
           git commit -m "📝 Update changelog"
-          git push origin "${ env.BRANCH }"
+          git push origin "${{env.BRANCH}}"
 
       - name: Cache
         id: cache-dependencies
