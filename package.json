@@ -9,6 +9,7 @@
 		"dist/**/*",
 		"src/**/*",
 		"README*.md",
+		"CHANGELOG.md",
 		"LICENSE"
 	],
 	"scripts": {
@@ -24,6 +25,7 @@
 	"homepage": "https://github.com/Nattsu39/nodejs-template/#readme",
 	"devDependencies": {
 		"@types/node": "^20.12.7",
+		"prettier": "3.2.5",
 		"typescript": "^5.4.5"
 	}
 }
