@@ -1,0 +1,29 @@
+{
+	"name": "nodejs-template-test",
+	"version": "0.1.0",
+	"description": "template test.",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/**/*",
+		"src/**/*",
+		"README*.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"prepublish": "npm run clean && npm run build",
+		"clean": "npx rimraf ./dist",
+		"build": "npm run clean && npx tsc -b -clean && npx tsc -b"
+	},
+	"author": "Nattsu39",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Nattsu39/nodejs-template/issues"
+	},
+	"homepage": "https://github.com/Nattsu39/nodejs-template/#readme",
+	"devDependencies": {
+		"@types/node": "^20.12.7",
+		"typescript": "^5.4.5"
+	}
+}
