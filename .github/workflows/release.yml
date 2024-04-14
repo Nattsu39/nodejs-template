@@ -14,8 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref_name }}
           fetch-depth: 0
+
+      - name: Get Branch
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw/origin\/}
+          echo "BRANCH=$branch" >> $GITHUB_ENV
 
       - uses: actions/setup-node@v3
         with:
@@ -31,7 +36,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git add .
           git commit -m "📝 Update changelog"
-          git push
+          git push origin "${ env.BRANCH }"
+
       - name: Cache
         id: cache-dependencies
         uses: actions/cache@v3
