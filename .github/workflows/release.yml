@@ -9,8 +9,35 @@ on:
       - 'v*'
 
 jobs:
-  release:
+  # @see https://stackoverflow.com/a/72959712/8179249
+  check-current-branch:
     runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.check_step.outputs.branch }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get current branch
+        id: check_step
+        # 1. Get the list of branches ref where this tag exists
+        # 2. Remove 'origin/' from that result
+        # 3. Put that string in output
+        # => We can now use function 'contains(list, item)''
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch="$(echo ${raw//origin\//} | tr -d '\n')"
+          echo "{name}=branch" >> $GITHUB_OUTPUT
+          echo "Branches where this tag exists : $branch."
+
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    # Wait for check step to finish
+    needs: check-current-branch
+    # only run if tag is present on branch 'main'
+    if: contains(${{ needs.check-current-branch.outputs.branch }}, 'main')`
     steps:
       - uses: actions/checkout@v3
         with:
