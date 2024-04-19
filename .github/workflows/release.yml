@@ -52,7 +52,7 @@ jobs:
       - name: Extract tag_ref
         id: extract_tag
         run: |
-          echo "tag_name=${${{github.ref}}##*/}" >> $GITHUB_OUTPUT
+          echo "tag_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
 
       - run: npx changelogithub
         env:
@@ -64,6 +64,7 @@ jobs:
         with:
           add: CHANGELOG.md
           default_author: github_actions
+          branch: main
           message: '🐳 chore(release): Update Changelog ${{ steps.extract_tag.outputs.tag_name }}'
       
       - name: Cache
