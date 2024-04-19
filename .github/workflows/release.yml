@@ -16,14 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get Branch
-        run: |
-          raw=$(git branch -r --contains ${{ github.ref }})
-          echo "$raw"
-          branch=${raw##*/}
-          echo "BRANCH=$branch" >> $GITHUB_ENV
-          echo "$branch"
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
@@ -32,13 +24,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Commit changelog
-        run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git add .
-          git commit -m "📝 Update changelog"
-          git push origin "${{env.BRANCH}}"
+      - name: Commit and push CHANGELOG.md
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: CHANGELOG.md
+          message: "chore: Update CHANGELOG.md"
+      #    branch: main
 
       - name: Cache
         id: cache-dependencies
