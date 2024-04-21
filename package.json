@@ -1,6 +1,6 @@
 {
 	"name": "nodejs-template-test",
-	"version": "0.1.0",
+	"version": "0.6.1",
 	"description": "template test.",
 	"type": "module",
 	"main": "dist/index.js",
