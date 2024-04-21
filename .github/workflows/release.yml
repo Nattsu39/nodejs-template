@@ -35,8 +35,6 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     # Wait for check step to finish
-    outputs:
-      tag_name: ${{ steps.extract_tag.outputs.tag_name }}
     needs: check-current-branch
     # only run if tag is present on branch 'main'
     if: contains(${{ needs.check-current-branch.outputs.branch }}, 'main')`
@@ -49,43 +47,33 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Extract tag_ref
-        id: extract_tag
-        run: |
-          echo "tag_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-
-      - run: npx changelogithub
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      
-      - run: npx changelogithub --output CHANGELOG.md
-      
-      - uses: EndBug/add-and-commit@v7
+      - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v5
         with:
-          add: CHANGELOG.md
-          default_author: github_actions
-          branch: main
-          message: '🐳 chore(release): Update Changelog ${{ steps.extract_tag.outputs.tag_name }}'
-      
-      - name: Cache
-        id: cache-dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-              **/node_modules
-          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+          github-token: ${{ secrets.github_token }}
+          preset: "conventionalcommits"
+          skip-git-pull: true
+          git-message: '🐳 chore(release): Update Changelog {version}'
+          output-file: CHANGELOG.md
+      #- name: Cache
+      #  id: cache-dependencies
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: |
+      #        **/node_modules
+      #    key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
 
-      - name: Installing Dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm install
+      #- name: Installing Dependencies
+      #  if: steps.cache-dependencies.outputs.cache-hit != 'true'
+      #  run: npm install
 
-      - name: Running Build
-        run: npm run build
+      #- name: Running Build
+      #  run: npm run build
 
       #- name: Running Test
       #  run: npm run test-unit
 
-      - name: Running Publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      #- name: Running Publish
+      #  run: npm publish
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
