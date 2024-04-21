@@ -59,7 +59,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           exclude_types: other,doc,chore,build
-          config_file: .github/tag-changelog-config.js
+          config_file: .github/tag-changelog-config.cjs
 
       - name: Read CHANGELOG.md
         id: readfile
