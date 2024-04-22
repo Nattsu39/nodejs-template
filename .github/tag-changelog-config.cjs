@@ -2,7 +2,7 @@ const temp_commits = [];
 
 module.exports = {
 	types: [
-	  { types: ["feat", "feature", "feat!"], label: "🎉 New Features" },
+	  { types: ["feat", "feature", "✨ feat"], label: "🎉 New Features" },
 	  { types: ["fix", "bugfix"], label: "🐛 Bugfixes" },
 	  { types: ["improvements", "enhancement"], label: "🔨 Improvements" },
 	  { types: ["perf"], label: "🏎️ Performance Improvements" },
