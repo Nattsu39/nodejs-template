@@ -19,7 +19,7 @@ module.exports = {
 
 	renderTypeSection: function (label, commits, includeCommitBody) {
 		let text = `\n## ${label}\n`;
-	
+		console.log(commits);
 		commits.forEach(commit => {
 			temp_commits.push(commit)
 			const scope = commit.scope ? `**${commit.scope}:** ` : "";
@@ -27,7 +27,7 @@ module.exports = {
 		});
 	
 		return text;
-		},
+	},
 	
 	renderNotes: function (notes) {
 		let text = `\n🚨 Breaking Changes\n`;
@@ -37,7 +37,7 @@ module.exports = {
 		});
 	
 		return text;
-		},
+	},
 	
 	renderChangelog: function (release, changes) {
 		const now = new Date();
