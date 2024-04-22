@@ -1,3 +1,11 @@
+# v0.6.13 - 2024-04-22
+
+## 🎉 New Features
+- test2
+
+🚨 Breaking Changes
+- due to [5d248d](https://github.com/Nattsu39/nodejs-template/commit/5d248d139d48f0c062408ab9dc66629e1ee15bec): test2
+
 # v0.6.12 - 2024-04-22
 
 ## 🎉 New Features
